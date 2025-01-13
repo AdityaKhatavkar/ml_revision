@@ -56,10 +56,50 @@
                 Effectively changes the spread of the data.
                 Make the value spread uniform.
 
-        It is usally used more than uniform. Sklearn has also this is as default method.
+        This type  is usally used more than uniform binning method. Sklearn has also this is as default method.
 
 
 # K means binning: 
 
         When the distribution of the data is in the form of clusters. Then we use this strategy. 
+
         Here we simply apply the k means algorithm on the dataset and then we create the intervals.
+
+# sklearn implementation:
+        
+        There is a class called  ' sklearn.preprocessing.KBinsDiscretizer() '
+
+        Syntax : sklearn.preprocessing.KBinsDiscretizer(n_bins=5, *, encode='onehot', strategy='quantile', dtype=None, subsample=200000, random_state=None)
+
+        parameters: 1)Bins  : Number of bins
+                    2)Strategy : type of binning method
+                    3)encode : ordinal or one_hot_encoding
+
+# custome / domain based binning
+        
+        In this method, we use our domain knowledge to make custom bins. 
+        For eg. One can make age group bins as (0-18 i.e. kids, 18-60 as adults, 90+ as seniors).
+
+        Unfortunately sklearn not provides this type of implementation. 
+        We have to write code using pandas manually.
+
+
+# Binarization:
+        
+        Special case of binnig
+
+        Here we convert continuous variables into binary variables.
+
+        For eg. We want to classify the person's income as taxable or not.
+                so, people with income < 2L are non-taxable i.e. set to 0
+                and people with income > 2L are taxable i.e  set to 1
+        
+        Thats it.. :)
+
+        sklearn implementation: 
+        
+        There is a class called  ' sklearn.preprocessing.Binarizer(threshold=0.0, *, copy=True) '
+
+        threshold : threshold value
+        copy      : if true , new feature will be created with binary values
+                    if false, updation in the existing column will takes place
