@@ -19,7 +19,11 @@
 
 #  Ridge Regression
 
-    sum (0->n) ( (y - y_hat)^2 +  lambda * sum (0->n) (Wi^2))
+    We use ridge regression when all features are important and we dont want to remove any of the feature.
+
+    L = sum (0->n) ( (y - y_hat)^2 +  lambda * sum (0->n) (Wi^2))
+
+    i.e  L = MSE + lambda * sum(0->n)(Wi^2)
 
     1> How the coefficients get affected ?
 
@@ -44,6 +48,8 @@
 
 # Lasso Regression
 
+    We use the lasso regression when some of the features are not important so that those featues can be dropped by the lasso regression.
+
     Loss = MSE + lambda* (sum(absolute(w)))
 
     1> How the coefficients get affected ?
@@ -63,3 +69,62 @@
         As lambda increases, many times helps to reduce overfitting.
         Hence bias also increases and variance decreases.
 
+
+    * Lasso Regression in sklearn : 
+        
+        class sklearn.linear_model.Lasso(
+            alpha=1.0, *, fit_intercept=True, precompute=False, copy_X=True, max_iter=1000, tol=0.0001, warm_start=False, positive=False, random_state=None, selection='cyclic'
+            )
+
+
+
+ # Why lasso regression creates sparisity ? (interview question)
+
+      -> As the lambda incresases, some of the coefficients get reduced to 0. Hence lasso regression creates sparsity in the dataframe.
+
+
+
+ # And how does the lasso makes coefficients to zero which is useful for feature selection. And why ridge cant?
+
+     -> Consider x (input) and y(output).
+        If we use simple linear regression (without regularizaiton)
+          
+           y = m*x + b
+
+           m = sum(i-n)[yi - y.mean()][xi - x.mean()] / sum(xi - x.mean())^2
+
+           b = y.mean - m*x.mean
+
+        If we use ridge regression
+           b is same. 
+           But in formula of m, Lambda is added in denominator.
+
+        If we use lasso regression
+            b is same.
+            But in formula of m, Lambda is added in numerator.
+
+        Lasso (L1): The penalty  i.e L1 norm forms a diamond-shaped constraint region. The sharp corners of the diamond often align with the coordinate axes, allowing coefficients to hit exactly zero.
+
+        Ridge (L2): The penalty i.e L2 norm forms a circular constraint region. The smooth edges of the circle make it unlikely  for coefficients to hit exactly zero
+
+ 
+
+ # Elastic net regression.
+
+    Combinaiton of ridge and lasso regression. 
+
+    Usage 1: Use when large dataset is available. And we cant sure whether the features are important or not.
+
+    Usage 2: We use this when, there is multicolinearity between the input features.
+
+
+
+    Loss function : 
+
+        L = MSE +  a * sum(absolute(w)) + b * sum(w^2)
+
+        lambda = a + b
+
+        L1_ration = a / (a + b)
+
+        In sklearn, default values are a = 0.5 and b = 0,5
